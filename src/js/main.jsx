@@ -16,15 +16,19 @@ const Home = () => {
     setTareas([...tareas, input]);
     setInput("");
   };
-
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       handleClick();
     }
   };
-  useEffect(() => {
-    console.log(tareas);
-  }, [tareas]);
+
+  const handleDelete = (escuchar) => {
+    let nuevoArreglo = tareas.filter(
+      (item) => escuchar.target.parentElement.firstChild.textContent != item
+    );
+    setTareas(nuevoArreglo);
+  };
+
 
   return (
     <div className="contenedorPrincipal justify-content-center align-items-center d-flex flex-column">
@@ -32,6 +36,7 @@ const Home = () => {
         <label className="titulo" htmlFor="">
           Lista de tareas
         </label>
+
         <div className="contenedorInputBoton">
           {" "}
           <input
@@ -49,7 +54,10 @@ const Home = () => {
 
         <ul>
           {tareas.map((tarea) => (
-            <li>{tarea}</li>
+            <li className="listaTareas" key={tarea}>
+              {tarea}
+              <button onClick={handleDelete}>X</button>
+            </li>
           ))}
         </ul>
       </div>
